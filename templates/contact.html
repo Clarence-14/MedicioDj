@@ -1,0 +1,27 @@
+{% extends 'inner-page.html' %}
+
+{% load static %}
+
+{% block body %}
+    <br><br><br>
+    <form action="" method="POST">
+    {% csrf_token %}
+    <h1 class="text-center">CONTACT US</h1>
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="Enter Your Name" required="required">
+        <br><br>
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter Your Email Address" required="required">
+        <br><br>
+        <label for="phone" class="form-label">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter Your Phone Number" required="required">
+        <br><br>
+        <label for="message" class="form-label">Message:</label>
+        <input type="text" id="message" name="message" class="form-control" placeholder="Type something here" required="required">
+        <br><br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </form>
+
+
+{% endblock %}
