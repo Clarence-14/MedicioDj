@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
-from MedicioApp.models import Contact
+from MedicioApp.models import Contact, Appoint
+
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -28,3 +30,29 @@ def contact(request):
 
     else:
         return render(request, 'contact.html')
+
+def appointments(request):
+    if request.method == 'POST':
+        appoint = Appoint(name=request.POST['name'],
+                      email=request.POST['email'],
+                      phone=request.POST['phone'],
+                      date=request.POST['date'],
+                      department=request.POST['department'],
+                      doctor=request.POST['doctor'],
+                      message=request.POST['message'],
+                      )
+
+        appoint.save()
+        return redirect('/appointments')
+
+    else:
+        return render(request, 'appointments.html')
+
+def show(request):
+    information = Appoint.objects.all()
+    return render(request, 'show.html', {'data': information})
+
+def delete(request, id):
+    myappointment = Appoint.objects.get(id=id)
+    myappointment.delete()
+    return redirect('/show')
