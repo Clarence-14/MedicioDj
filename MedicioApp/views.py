@@ -75,3 +75,10 @@ def update(request, id):
 
     else:
         return render(request, 'edit.html')
+
+def register(request):
+    return render(request, 'register.html')
+
+
+def login(request):
+    return render(request, 'login.html')
