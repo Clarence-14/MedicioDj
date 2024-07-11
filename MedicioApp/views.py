@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from MedicioApp.models import Contact, Appoint
+from MedicioApp.forms import AppointmentForm
 
 
 # Create your views here.
@@ -56,3 +57,21 @@ def delete(request, id):
     myappointment = Appoint.objects.get(id=id)
     myappointment.delete()
     return redirect('/show')
+
+def edit(request,id):
+    appointment = Appoint.objects.get(id=id)
+    return render(request, 'edit.html', {'x': appointment})
+
+def update(request, id):
+    if request.method == 'POST':
+       appointment = Appoint.objects.get(id=id)
+       form = AppointmentForm(request.POST, instance=appointment)
+       if form.is_valid():
+           form.save()
+           return redirect('/show')
+
+       else:
+           return render(request, 'edit.html')
+
+    else:
+        return render(request, 'edit.html')
