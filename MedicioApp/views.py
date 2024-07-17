@@ -1,11 +1,18 @@
 from django.shortcuts import render, redirect
-from MedicioApp.models import Contact, Appoint
+from MedicioApp.models import Contact, Appoint, Member
 from MedicioApp.forms import AppointmentForm
-
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    if request.method == 'POST':
+        if Member.objects.filter(username=request.POST['username'],
+                                 password=request.POST['password'],
+                                 ).exists():
+            members = Member.objects.filter(username=request.POST['username'],
+                                            password=request.POST['password'],)
+            return render(request, 'index.html',{'members': members})
+        else:
+            return render(request, 'index.html')
 
 def inner(request):
     return render(request, 'inner-page.html')
@@ -77,7 +84,16 @@ def update(request, id):
         return render(request, 'edit.html')
 
 def register(request):
-    return render(request, 'register.html')
+    if request.method == "POST":
+        members = Member(name=request.POST['name'],
+                         username=request.POST['username'],
+                         password=request.POST['password'],
+                         )
+        members.save()
+        return redirect('/login')
+
+    else:
+       return render(request, 'register.html')
 
 
 def login(request):
