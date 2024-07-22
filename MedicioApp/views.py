@@ -22,7 +22,7 @@ def index(request):
         else:
             return render(request, 'login.html')
     else:
-        return render(request, 'login.html')
+        return render(request, 'index.html')
 
 
 def inner(request):
